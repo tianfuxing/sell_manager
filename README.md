@@ -1,3 +1,3 @@
 # sell_manager
 点餐系统
-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
+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
