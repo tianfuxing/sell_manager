@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.dao.SpecificMapper">
+    <insert id="addUserLevel" parameterType="com.study.bean.specific.UserLevel">
+        insert into wx_user_level(id,name,maxscore,createtime)
+        values(#{id},#{name},#{maxscore},#{createtime})
+    </insert>
+
+    <update id="updateUserLevel" parameterType="com.study.bean.specific.UserLevel">
+        update wx_user_level
+        set name=#{name},maxscore=#{maxscore}
+        where id=#{id}
+    </update>
+
+    <update id="deleteUserLevel" parameterType="com.study.bean.specific.UserLevel">
+        delete
+        from wx_user_level
+        where id=#{id}
+    </update>
+
+    <select id="getUserLevelByPage" resultType="com.study.bean.specific.UserLevel">
+        select *
+        from wx_user_level
+        order by maxscore
+        limit #{start},#{limit}
+    </select>
+
+    <select id="getUserLevelByPageCount" resultType="Integer">
+        select count(*)
+        from wx_user_level
+    </select>
+
+    <insert id="addFoodType" parameterType="com.study.bean.specific.FoodType">
+        insert into wx_food_type(id,name,sort,createtime)
+        values(#{id},#{name},#{sort},#{createtime})
+    </insert>
+
+    <update id="updateFoodType" parameterType="com.study.bean.specific.FoodType">
+        update wx_food_type
+        set name=#{name},sort=#{sort}
+        where id=#{id}
+    </update>
+
+    <update id="deleteFoodType" parameterType="com.study.bean.specific.FoodType">
+        delete
+        from wx_food_type
+        where id=#{id}
+    </update>
+
+    <select id="getFoodTypeByPage" resultType="com.study.bean.specific.FoodType">
+        select *
+        from wx_food_type
+        order by sort
+        limit #{start},#{limit}
+    </select>
+
+    <select id="getFoodTypeByPageCount" resultType="Integer">
+        select count(*)
+        from wx_food_type
+    </select>
+
+    <insert id="addFood" parameterType="com.study.bean.specific.Food">
+        insert into wx_food(id,name,price,typeid,sort,image,createtime)
+        values(#{id},#{name},#{price},#{typeid},#{sort},#{image},#{createtime})
+    </insert>
+
+    <update id="updateFood" parameterType="com.study.bean.specific.Food">
+        update wx_food
+        set name=#{name},price=#{price},typeid=#{typeid},sort=#{sort},image=#{image}
+        where id=#{id}
+    </update>
+
+    <update id="deleteFood" parameterType="com.study.bean.specific.Food">
+        delete
+        from wx_food
+        where id=#{id}
+    </update>
+
+    <select id="getFoodByPage" resultType="com.study.bean.specific.Food">
+        select f.*,t.name typename
+        from wx_food f,wx_food_type t
+        where f.typeid=t.id
+        order by t.sort,f.sort
+        limit #{start},#{limit}
+    </select>
+
+    <select id="getFoodByPageCount" resultType="Integer">
+        select count(*)
+        from wx_food
+    </select>
+
+    <select id="getFoodTypeAll" resultType="com.study.bean.specific.FoodType">
+        select *
+        from wx_food_type
+        order by sort
+    </select>
+
+    <select id="getWxFoodTypeAll" resultType="com.study.bean.specific.FoodType">
+        select t.id id,t.name name,count(*) num
+        from wx_food_type t,wx_food f
+        where t.id=f.typeid
+		group by t.id,t.name
+        order by t.sort
+    </select>
+
+    <select id="getWxFoodAll" resultType="com.study.bean.specific.Food">
+        select f.*
+        from wx_food_type t,wx_food f
+        where t.id=f.typeid
+        order by t.sort,f.sort
+    </select>
+
+    <insert id="addOrder" parameterType="com.study.bean.specific.Order">
+        insert into wx_order(id,userid,type,number,totalmoney,totalnum,address,name,tel,status,createtime)
+        values(#{id},#{userid},#{type},#{number},#{totalmoney},#{totalnum},#{address},#{name},#{tel},#{status},#{createtime})
+    </insert>
+
+    <insert id="addOrderInfo">
+        insert into wx_order_info (id,orderid,foodid,num,price,totalprice)
+        values
+        <foreach collection="list" item="item" separator="," index="index">
+            (#{item.id},#{item.orderid},#{item.foodid},#{item.num},#{item.price},#{item.totalprice})
+        </foreach>
+    </insert>
+
+    <update id="updateUserScore">
+        update wx_user
+        set score=score+#{score}
+        where id=#{id}
+    </update>
+
+    <select id="getSoldByFoodId" resultType="Integer">
+        select count(*)
+        from wx_order_info
+        where foodid=#{foodid}
+    </select>
+
+    <select id="getUserLevelAll" resultType="com.study.bean.specific.UserLevel">
+        select *
+        from wx_user_level
+        order by maxscore
+    </select>
+
+    <select id="getUserScore" resultType="Integer">
+        select score
+        from wx_user
+        where id=#{id}
+    </select>
+
+    <select id="getUserOrder" resultType="com.study.bean.specific.Order">
+        select *
+        from wx_order
+        where userid=#{id}
+        order by createtime desc
+    </select>
+
+    <select id="getOrderInfoByOrderId" resultType="com.study.bean.specific.OrderInfo">
+        select wi.*,f.image,f.name
+        from wx_order_info wi,wx_food f
+        where wi.orderid=#{orderid}
+        and wi.foodid=f.id
+    </select>
+
+    <insert id="addAddress" parameterType="com.study.bean.specific.Address">
+        insert into wx_address(id,userid,address,name,tel,defaults,createtime)
+        values(#{id},#{userid},#{address},#{name},#{tel},#{defaults},#{createtime})
+    </insert>
+
+    <update id="updateAddress" parameterType="com.study.bean.specific.Address">
+        update wx_address
+        set address=#{address},name=#{name},tel=#{tel}
+        where id=#{id}
+    </update>
+
+    <select id="getAddress" resultType="com.study.bean.specific.Address">
+        select *
+        from wx_address
+        where userid=#{userid}
+        order by createtime desc
+    </select>
+
+    <select id="getOrderById" resultType="com.study.bean.specific.Order">
+        select *
+        from wx_order
+        where id=#{id}
+    </select>
+
+    <select id="getOrderByPage" resultType="com.study.bean.specific.Order">
+        select *
+        from wx_order
+        order by createtime desc
+        limit #{start},#{limit}
+    </select>
+
+    <select id="getOrderByPageCount" resultType="Integer">
+        select count(*)
+        from wx_order
+    </select>
+
+    <update id="updateOrderStatus">
+        update wx_order
+        set status=#{status}
+        where id=#{id}
+    </update>
+</mapper>
