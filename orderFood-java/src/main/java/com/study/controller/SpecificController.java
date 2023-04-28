@@ -35,6 +35,7 @@ public class SpecificController {
         if (result > 0) {
             return CommonResult.success();
         }
+
         return CommonResult.failed();
     }
 

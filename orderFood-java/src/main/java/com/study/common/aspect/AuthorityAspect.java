@@ -58,6 +58,7 @@ public class AuthorityAspect {
             if (token == null || token.equals("") || !JWTUtil.verify(token)) {
                 return CommonResult.unauthorized(null);
             }
+            //若不启动redis则需要把这段代码注释掉，否则报错（62-67）
             PostMapping methodPostMapping = method.getAnnotation(PostMapping.class);
             if (methodPostMapping!=null){
                 if (!InitData.init()){
