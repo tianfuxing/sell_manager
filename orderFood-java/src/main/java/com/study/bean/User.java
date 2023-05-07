@@ -28,7 +28,12 @@ public class User {
 
     private Date lastlogintime;
 
+    private String nickname;
+
     private String departmentid;
+
+
+    private String headimg;
 
     private String departmentname;
 
@@ -152,5 +157,21 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getHeadimg() {
+        return headimg;
+    }
+
+    public void setHeadimg(String headimg) {
+        this.headimg = headimg;
     }
 }

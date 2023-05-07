@@ -38,7 +38,7 @@ public interface SpecificMapper {
 
     List<Food> getFoodByPage(Map dataMap);
 
-    int getFoodByPageCount();
+    int getFoodByPageCount(Map dataMap);
 
     List<FoodType> getFoodTypeAll();
 

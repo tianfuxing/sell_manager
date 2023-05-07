@@ -74,8 +74,8 @@ public class SpecificService {
         return mapper.getFoodByPage(dataMap);
     }
 
-    public int getFoodByPageCount(){
-        return mapper.getFoodByPageCount();
+    public int getFoodByPageCount(Map dataMap){
+        return mapper.getFoodByPageCount(dataMap);
     }
 
     public List<FoodType> getFoodTypeAll(){

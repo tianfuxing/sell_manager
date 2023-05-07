@@ -8,10 +8,13 @@ import com.study.service.SpecificService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -201,13 +204,14 @@ public class SpecificController {
      * @return
      */
     @GetMapping("/getFoodByPage")
-    public CommonResult getFoodByPage(@RequestParam int page, @RequestParam int limit){
+    public CommonResult getFoodByPage(@RequestParam int page, @RequestParam int limit,@RequestParam String selectName){
         int start = limit * page - limit;
         Map dataMap = new HashMap();
         dataMap.put("start", start);
         dataMap.put("limit", limit);
+        dataMap.put("selectName", selectName);
         List<Food> dataList = service.getFoodByPage(dataMap);
-        int count = service.getFoodByPageCount();
+        int count = service.getFoodByPageCount(dataMap);
         return CommonResult.success(dataList, count);
     }
 
@@ -367,11 +371,13 @@ public class SpecificController {
      * @return
      */
     @GetMapping("/getOrderByPage")
-    public CommonResult getOrderByPage(@RequestParam int page, @RequestParam int limit){
+    public CommonResult getOrderByPage(@RequestParam int page, @RequestParam int limit,@RequestParam String startTime,@RequestParam String endTime){
         int start = limit * page - limit;
         Map dataMap = new HashMap();
         dataMap.put("start", start);
         dataMap.put("limit", limit);
+        dataMap.put("startTime", startTime);
+        dataMap.put("endTime", endTime);
         List<Order> dataList = service.getOrderByPage(dataMap);
         int count = service.getOrderByPageCount();
         return CommonResult.success(dataList, count);
