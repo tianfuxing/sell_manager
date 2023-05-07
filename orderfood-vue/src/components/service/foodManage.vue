@@ -1,8 +1,22 @@
 <template>
   <div>
-    <el-card class="box-card" shadow="never">
-      <el-button size="mini" @click="add">添加</el-button>
-    </el-card>
+    <el-row>
+      <el-col :span="8">
+        <div>
+          <el-input size="small"  v-model="selectName" placeholder="请输入菜品名称"></el-input>
+        </div>
+      </el-col>
+      <el-col :span="8">
+        <div>
+          <el-button type="primary" icon="search" size="small" @click="getDataPage(1,pageSize,selectName)">查询</el-button>
+        </div>
+      </el-col>
+      <el-col :span="8" style="text-align: right">
+        <div>
+          <el-button type="success" size="small" @click="add">添加</el-button>
+        </div>
+      </el-col>
+    </el-row>
     <el-table :data="tableData" border style="width: 100%;margin-top: 20px;"
       :header-cell-style="{ background: 'rgb(242, 243, 244)', color: '#515a6e' }">
       <el-table-column fixed prop="id" label="ID" v-if="false">
@@ -76,11 +90,11 @@ export default {
   methods: {
     handleSizeChange(val) {
       this.pageSize = val;
-      this.getDataPage(this.currentPage, this.pageSize);
+      this.getDataPage(this.currentPage, this.pageSize,this.selectName);
     },
     handleCurrentChange(val) {
       this.currentPage = val;
-      this.getDataPage(this.currentPage, this.pageSize);
+      this.getDataPage(this.currentPage, this.pageSize,this.selectName);
     },
     add() {
       this.title = "添加菜品";
@@ -126,7 +140,7 @@ export default {
                 message: '操作成功'
               });
               that.currentPage = 1;
-              that.getDataPage(1, that.pageSize);
+              that.getDataPage(1, that.pageSize,that.selectName);
             }
           })
       });
@@ -147,7 +161,7 @@ export default {
                     type: 'success',
                     message: '操作成功'
                   });
-                  that.getDataPage(that.currentPage, that.pageSize);
+                  that.getDataPage(that.currentPage, that.pageSize,that.selectName);
                   that.dialogFormVisible = false;
                 }
               })
@@ -161,7 +175,7 @@ export default {
                     type: 'success',
                     message: '操作成功'
                   });
-                  that.getDataPage(that.currentPage, that.pageSize);
+                  that.getDataPage(that.currentPage, that.pageSize,that.selectName);
                   that.dialogFormVisible = false;
                 }
               })
@@ -186,11 +200,12 @@ export default {
     fileRemove(file, fileList) {
       this.food.image = "";
     },
-    getDataPage(currentPage, pageSize) {
+    getDataPage(currentPage, pageSize,selectName) {
       const that = this;
       var param = new URLSearchParams();
       param.append("page", currentPage);
       param.append("limit", pageSize);
+      param.append("selectName", selectName);
       this.$http
         .get('/specific/getFoodByPage', {
           params: param
@@ -217,7 +232,7 @@ export default {
     }
   },
   mounted() {
-    this.getDataPage(this.currentPage, this.pageSize);
+    this.getDataPage(this.currentPage, this.pageSize,this.selectName);
     this.getFoodTypeAll();
   },
   data() {
@@ -237,6 +252,7 @@ export default {
       dialogInputButtonVisible: false,
       dialogFormVisible: false,
       total: 0,
+      selectName:"",
       pageSize: 5,
       currentPage: 1,
       tableData: [],

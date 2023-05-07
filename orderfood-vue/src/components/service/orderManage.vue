@@ -1,5 +1,22 @@
 <template>
   <div>
+    <el-row>
+      <el-col :span="12">
+        <div>
+          <span style="margin: 0px 5px 0px 0px">下单时间</span>
+          <el-date-picker size="small" v-model="startTime"  type="date" value-format="yyyy-MM-dd">
+          </el-date-picker>
+          --
+          <el-date-picker size="small" v-model="endTime"  type="date" value-format="yyyy-MM-dd">
+          </el-date-picker>
+        </div>
+      </el-col>
+      <el-col :span="12">
+        <div>
+          <el-button type="primary" icon="search" size="small" @click="getDataPage(1,pageSize,startTime,endTime)">查询</el-button>
+        </div>
+      </el-col>
+    </el-row>
     <el-table :data="tableData" border style="width: 100%;margin-top: 20px;"
       :header-cell-style="{ background: 'rgb(242, 243, 244)', color: '#515a6e' }">
       <el-table-column fixed prop="id" label="ID" v-if="false">
@@ -146,11 +163,13 @@ export default {
           })
       }
     },
-    getDataPage(currentPage, pageSize) {
+    getDataPage(currentPage, pageSize,startTime,endTime) {
       const that = this;
       var param = new URLSearchParams();
       param.append("page", currentPage);
       param.append("limit", pageSize);
+      param.append("startTime", startTime);
+      param.append("endTime", endTime);
       this.$http
         .get('/specific/getOrderByPage', {
           params: param
@@ -169,7 +188,7 @@ export default {
     }
   },
   mounted() {
-    this.getDataPage(this.currentPage, this.pageSize);
+    this.getDataPage(this.currentPage, this.pageSize,this.startTime,this.endTime);
   },
   data() {
     return {
@@ -184,13 +203,15 @@ export default {
         name: "",
         tel: "",
         createtime: "",
-        orderInfoList: []
+        orderInfoList: [],
       },
       title: "",
       dialogInputButtonVisible: false,
       dialogFormVisible: false,
       total: 0,
       pageSize: 5,
+      startTime:"",
+      endTime:"",
       currentPage: 1,
       tableData: []
     }

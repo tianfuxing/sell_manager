@@ -5,8 +5,8 @@
 
 <mapper namespace="com.study.dao.AuthenticationMapper">
     <insert id="addData" parameterType="com.study.bean.User">
-        insert into wx_user(id,openid,score,createtime,lastlogintime)
-        values(#{id},#{openid},#{score},#{createtime},#{lastlogintime})
+        insert into wx_user(id,openid,score,createtime,lastlogintime,nickname,headimg)
+        values(#{id},#{openid},#{score},#{createtime},#{lastlogintime},#{nickname},#{headimg})
     </insert>
 
     <select id="searchDataByOpenid" resultType="com.study.bean.User">

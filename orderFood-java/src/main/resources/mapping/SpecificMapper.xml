@@ -82,7 +82,12 @@
     <select id="getFoodByPage" resultType="com.study.bean.specific.Food">
         select f.*,t.name typename
         from wx_food f,wx_food_type t
-        where f.typeid=t.id
+        <where>
+            f.typeid=t.id
+            <if test="selectName != null and selectName != ''">
+                and f.name like concat(concat('%', #{selectName}), '%')
+            </if>
+        </where>
         order by t.sort,f.sort
         limit #{start},#{limit}
     </select>
@@ -90,6 +95,11 @@
     <select id="getFoodByPageCount" resultType="Integer">
         select count(*)
         from wx_food
+        <where>
+            <if test="selectName != null and selectName != ''">
+                and name like concat(concat('%', #{selectName}), '%')
+            </if>
+        </where>
     </select>
 
     <select id="getFoodTypeAll" resultType="com.study.bean.specific.FoodType">
@@ -191,6 +201,14 @@
     <select id="getOrderByPage" resultType="com.study.bean.specific.Order">
         select *
         from wx_order
+        <where>
+            <if test="startTime != null and startTime != ''">
+                and createtime >= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and createtime &lt;= #{endTime}
+            </if>
+        </where>
         order by createtime desc
         limit #{start},#{limit}
     </select>
@@ -198,6 +216,14 @@
     <select id="getOrderByPageCount" resultType="Integer">
         select count(*)
         from wx_order
+        <where>
+            <if test="startTime != null and startTime != ''">
+                and createtime >= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and createtime &lt;= #{endTime}
+            </if>
+        </where>
     </select>
 
     <update id="updateOrderStatus">
