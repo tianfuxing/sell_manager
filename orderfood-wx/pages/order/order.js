@@ -28,7 +28,7 @@ Page({
 
   toOrderInfo: function(e){
     wx.navigateTo({
-      url: 'orderInfo?id='+e.currentTarget.dataset.id,
+      url: '../orderInfo/orderInfo?id='+e.currentTarget.dataset.id,
     })
   },
 
