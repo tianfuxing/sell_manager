@@ -1,6 +1,6 @@
 <view style="height:150px;width:100%;background:#8B0909;">
   <view style="height:60px;width:60px;margin-top:40px;margin-left:7%;float:left;">
-    <image src="../images/my_icon.jpg" style="height:60px;width:60px;"></image>
+    <image src="/images/my_icon.jpg" style="height:60px;width:60px;"></image>
   </view>
   <view style="height:60px;float:left;margin-left:10px;color:white;margin-top:40px;">
     <view style="height:30px;line-height:30px;">
@@ -21,35 +21,35 @@
   </view>
 </view>
 <view style="height:80px;width:90%;margin-left:5%;background:white;position:absolute;top:230px;border-radius:10px;">
-  <image onload="unLoading" style="height:100%;width:100%;border-radius:10px;" src="../images/my_fl.png"></image>
+  <image onload="unLoading" style="height:100%;width:100%;border-radius:10px;" src="/images/my_fl.png"></image>
 </view>
 <view style="position:absolute;top:320px;width:90%;margin-left:5%;border-radius:10px;background:white;">
-  <navigator url='order' open-type="switchTab">
+  <navigator url='../order/order' open-type="switchTab">
     <view class="sth">
-      <image src="../images/order_on.png" class="icon"></image>
+      <image src="/images/order_on.png" class="icon"></image>
       我的订单
-      <image src="../images/right.png" class="right"></image>
+      <image src="/images/right.png" class="right"></image>
     </view>
   </navigator>
-  <navigator url='address'>
+  <navigator url='./address/address'>
     <view class="sth">
-      <image src="../images/address.png" class="icon"></image>
+      <image src="/images/address.png" class="icon"></image>
       我的地址
-      <image src="../images/right.png" class="right"></image>
+      <image src="/images/right.png" class="right"></image>
     </view>
   </navigator>
-  <navigator url='coupon'>
+  <navigator url='./coupon/coupon'>
     <view class="sth">
-      <image src="../images/myinfo.png" class="icon"></image>
+      <image src="/images/myinfo.png" class="icon"></image>
       个人信息
-      <image src="../images/right.png" class="right"></image>
+      <image src="/images/right.png" class="right"></image>
     </view>
   </navigator>
-  <navigator url='about'>
+  <navigator url='./about/about'>
     <view style="width: 90%;margin-left:5%;height: 50px;line-height:50px;">
-      <image src="../images/about.png" class="icon"></image>
+      <image src="/images/about.png" class="icon"></image>
       关于
-      <image src="../images/right.png" class="right"></image>
+      <image src="/images/right.png" class="right"></image>
     </view>
   </navigator>
 </view>

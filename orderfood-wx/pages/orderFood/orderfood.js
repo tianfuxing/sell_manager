@@ -22,7 +22,7 @@ Page({
 
   unLoading: function(){
     if (this.data.showLoading){
-      this.data.showLoading=false;
+      this.data.showLoading=true;
       this.setData({
         showLoading:false
       })

@@ -2,7 +2,7 @@
 <view style="text-align:center;font-weight:600;height:60px;line-height:60px;font-size:18px;">我的订单</view>
 <view style="position:absolute;top:60px;bottom:0px;left:0;right:0;overflow:auto;">
   <view wx:if="{{orderData.length==0}}" style="width:100%;height:200px;text-align:center;">
-    <image onload="unLoading" src="../images/noOrder.png" style="width:100px;height:100px;margin-top:50px;">
+    <image onload="unLoading" src="/images/noOrder.png" style="width:100px;height:100px;margin-top:50px;">
     </image>
   </view>
   <view wx:if="{{orderData.length==0}}" style="width:100%;height:60px;text-align:center;">
@@ -10,7 +10,7 @@
   </view>
   <view wx:if="{{orderData.length==0}}"
     style="line-height:40px;margin-top:10px;border-radius:30px;height:40px;width:60%;margin-left:20%;background:#8B0909;color:white;font-weight:600;text-align:center;">
-    <navigator url='orderfood' open-type="switchTab">
+    <navigator url='../orderFood/orderfood' open-type="switchTab">
       去点单
     </navigator>
   </view>
