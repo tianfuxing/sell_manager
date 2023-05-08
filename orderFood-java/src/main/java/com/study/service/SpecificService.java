@@ -54,8 +54,8 @@ public class SpecificService {
         return mapper.getFoodTypeByPage(dataMap);
     }
 
-    public int getFoodTypeByPageCount(){
-        return mapper.getFoodTypeByPageCount();
+    public int getFoodTypeByPageCount(Map dataMap){
+        return mapper.getFoodTypeByPageCount(dataMap);
     }
 
     public int addFood(Food food){
@@ -93,6 +93,12 @@ public class SpecificService {
     public void addOrder(Order order){
         mapper.addOrder(order);
         mapper.addOrderInfo(order.getOrderInfoList());
+        //更新库存数量
+        for(OrderInfo orderInfo:order.getOrderInfoList()){
+            Food food = mapper.getFoodById(orderInfo.getFoodid());
+            food.setNum(food.getNum()-orderInfo.getNum());
+            mapper.updateFood(food);
+        }
     }
 
     public void updateUserScore(Integer score){
@@ -158,8 +164,8 @@ public class SpecificService {
         return dataList;
     }
 
-    public int getOrderByPageCount(){
-        return mapper.getOrderByPageCount();
+    public int getOrderByPageCount(Map dataMap){
+        return mapper.getOrderByPageCount(dataMap);
     }
 
     public int orderCancel(String id){
@@ -168,5 +174,14 @@ public class SpecificService {
 
     public int orderAccomplish(String id){
         return mapper.updateOrderStatus(id,Order.ACCOMPLISH);
+    }
+
+    public List<OrderInfo> getOrderInfoByOrderId(String orderId){
+        List<OrderInfo> orderInfoList = mapper.getOrderInfoByOrderId(orderId);
+        return orderInfoList;
+    }
+
+    public Food getFoodById(String id){
+        return mapper.getFoodById(id);
     }
 }

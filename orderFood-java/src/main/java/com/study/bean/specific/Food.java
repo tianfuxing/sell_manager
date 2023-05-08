@@ -17,6 +17,8 @@ public class Food {
 
     private int sort;
 
+    private int num;
+
     private String image;
 
     private Date createtime;
@@ -83,5 +85,13 @@ public class Food {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 }

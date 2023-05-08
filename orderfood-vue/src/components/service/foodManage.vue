@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="8">
         <div>
-          <el-input size="small"  v-model="selectName" placeholder="请输入菜品名称"></el-input>
+          <el-input size="small"  v-model="selectName" placeholder="请输入菜品名称或菜品类型"></el-input>
         </div>
       </el-col>
       <el-col :span="8">
@@ -24,6 +24,8 @@
       <el-table-column prop="name" label="菜品名称">
       </el-table-column>
       <el-table-column prop="typename" label="菜品种类">
+      </el-table-column>
+      <el-table-column prop="num" label="库存">
       </el-table-column>
       <el-table-column prop="price" label="价格">
       </el-table-column>
@@ -68,6 +70,9 @@
             </el-upload>
             <img v-if="imgViewUrl" :src="imgViewUrl" style="width:100px;height:100px;" />
           </el-form-item>
+          <el-form-item label="库存：" label-width="100px" prop="num">
+            <el-input-number :disabled="dialogInputButtonVisible" v-model="food.num" clearable></el-input-number>
+          </el-form-item>
           <el-form-item label="价格：" label-width="100px" prop="price">
             <el-input-number :precision="2" :disabled="dialogInputButtonVisible" v-model="food.price"
               clearable></el-input-number>
@@ -104,6 +109,7 @@ export default {
       this.food.sort = "";
       this.food.image = "";
       this.imgViewUrl = "";
+      this.food.num = "";
       this.dialogFormVisible = true;
       this.dialogInputButtonVisible = false;
     },
@@ -111,6 +117,7 @@ export default {
       this.food.id = row.id;
       this.food.name = row.name;
       this.food.price = row.price;
+      this.food.num = row.num;
       this.food.typeid = row.typeid;
       this.food.sort = row.sort;
       this.food.image = row.image;

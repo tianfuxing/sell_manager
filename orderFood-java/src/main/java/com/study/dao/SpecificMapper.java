@@ -28,7 +28,7 @@ public interface SpecificMapper {
 
     List<FoodType> getFoodTypeByPage(Map dataMap);
 
-    int getFoodTypeByPageCount();
+    int getFoodTypeByPageCount(Map dataMap);
 
     int addFood(Food food);
 
@@ -72,7 +72,9 @@ public interface SpecificMapper {
 
     List<Order> getOrderByPage(Map dataMap);
 
-    int getOrderByPageCount();
+    int getOrderByPageCount(Map dataMap);
 
     int updateOrderStatus(@Param("id") String id,@Param("status") String status);
+
+    Food getFoodById(@Param("id") String orderid);
 }

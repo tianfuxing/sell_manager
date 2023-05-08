@@ -141,13 +141,14 @@ public class SpecificController {
      * @return
      */
     @GetMapping("/getFoodTypeByPage")
-    public CommonResult getFoodTypeByPage(@RequestParam int page, @RequestParam int limit){
+    public CommonResult getFoodTypeByPage(@RequestParam int page, @RequestParam int limit,@RequestParam String selectName){
         int start = limit * page - limit;
         Map dataMap = new HashMap();
         dataMap.put("start", start);
         dataMap.put("limit", limit);
+        dataMap.put("selectName", selectName);
         List<FoodType> dataList = service.getFoodTypeByPage(dataMap);
-        int count = service.getFoodTypeByPageCount();
+        int count = service.getFoodTypeByPageCount(dataMap);
         return CommonResult.success(dataList, count);
     }
 
@@ -379,7 +380,7 @@ public class SpecificController {
         dataMap.put("startTime", startTime);
         dataMap.put("endTime", endTime);
         List<Order> dataList = service.getOrderByPage(dataMap);
-        int count = service.getOrderByPageCount();
+        int count = service.getOrderByPageCount(dataMap);
         return CommonResult.success(dataList, count);
     }
 
@@ -391,6 +392,13 @@ public class SpecificController {
     @PostMapping("/orderCancel")
     public CommonResult orderCancel(@RequestBody Order order){
         service.orderCancel(order.getId());
+        List<OrderInfo> orderInfos = service.getOrderInfoByOrderId(order.getId());
+        for(OrderInfo orderInfo:orderInfos){
+          //还原库存数量
+          Food food=service.getFoodById(orderInfo.getFoodid());
+          food.setNum(food.getNum()+orderInfo.getNum());
+          service.updateFood(food);
+        }
         return CommonResult.success();
     }
 

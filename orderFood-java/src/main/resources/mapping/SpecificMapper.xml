@@ -51,25 +51,35 @@
     </update>
 
     <select id="getFoodTypeByPage" resultType="com.study.bean.specific.FoodType">
-        select *
-        from wx_food_type
+        select wt.*
+        from wx_food_type wt
+        <where>
+            <if test="selectName != null and selectName != ''">
+                and wt.name like concat(concat('%', #{selectName}), '%')
+            </if>
+        </where>
         order by sort
         limit #{start},#{limit}
     </select>
 
     <select id="getFoodTypeByPageCount" resultType="Integer">
         select count(*)
-        from wx_food_type
+        from wx_food_type wt
+        <where>
+            <if test="selectName != null and selectName != ''">
+                and wt.name like concat(concat('%', #{selectName}), '%')
+            </if>
+        </where>
     </select>
 
     <insert id="addFood" parameterType="com.study.bean.specific.Food">
-        insert into wx_food(id,name,price,typeid,sort,image,createtime)
-        values(#{id},#{name},#{price},#{typeid},#{sort},#{image},#{createtime})
+        insert into wx_food(id,name,price,typeid,sort,image,createtime,num)
+        values(#{id},#{name},#{price},#{typeid},#{sort},#{image},#{createtime},#{num})
     </insert>
 
     <update id="updateFood" parameterType="com.study.bean.specific.Food">
         update wx_food
-        set name=#{name},price=#{price},typeid=#{typeid},sort=#{sort},image=#{image}
+        set name=#{name},price=#{price},typeid=#{typeid},sort=#{sort},image=#{image},num=#{num}
         where id=#{id}
     </update>
 
@@ -85,7 +95,7 @@
         <where>
             f.typeid=t.id
             <if test="selectName != null and selectName != ''">
-                and f.name like concat(concat('%', #{selectName}), '%')
+                and (f.name like concat(concat('%', #{selectName}), '%') or t.name like concat(concat('%', #{selectName}), '%'))
             </if>
         </where>
         order by t.sort,f.sort
@@ -174,6 +184,12 @@
         and wi.foodid=f.id
     </select>
 
+    <select id="getFoodById" resultType="com.study.bean.specific.Food">
+        select *
+        from wx_food
+        where id=#{id}
+    </select>
+
     <insert id="addAddress" parameterType="com.study.bean.specific.Address">
         insert into wx_address(id,userid,address,name,tel,defaults,createtime)
         values(#{id},#{userid},#{address},#{name},#{tel},#{defaults},#{createtime})
@@ -202,10 +218,10 @@
         select *
         from wx_order
         <where>
-            <if test="startTime != null and startTime != ''">
+            <if test="startTime != null and startTime != '' and startTime != 'null'">
                 and createtime >= #{startTime}
             </if>
-            <if test="endTime != null and endTime != ''">
+            <if test="endTime != null and endTime != '' and endTime != 'null'">
                 and createtime &lt;= #{endTime}
             </if>
         </where>
@@ -217,10 +233,10 @@
         select count(*)
         from wx_order
         <where>
-            <if test="startTime != null and startTime != ''">
+            <if test="startTime != null and startTime != '' and startTime != 'null'">
                 and createtime >= #{startTime}
             </if>
-            <if test="endTime != null and endTime != ''">
+            <if test="endTime != null and endTime != '' and endTime != 'null'">
                 and createtime &lt;= #{endTime}
             </if>
         </where>
