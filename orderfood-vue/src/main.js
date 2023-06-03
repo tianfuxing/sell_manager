@@ -13,7 +13,7 @@ Vue.config.productionTip = false
 // 配置 Vue 插件
 Vue.use(ElementUI);
 
-axios.defaults.baseURL = "http://localhost:8080";
+axios.defaults.baseURL = "http://127.0.0.1:8081";
 Vue.prototype.$http = axios;
 //关闭弹框点击遮罩之外的地方关闭弹框
 ElementUI.Dialog.props.closeOnClickModal.default = false;

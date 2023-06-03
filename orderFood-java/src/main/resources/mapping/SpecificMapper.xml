@@ -134,8 +134,8 @@
     </select>
 
     <insert id="addOrder" parameterType="com.study.bean.specific.Order">
-        insert into wx_order(id,userid,type,number,totalmoney,totalnum,address,name,tel,status,createtime)
-        values(#{id},#{userid},#{type},#{number},#{totalmoney},#{totalnum},#{address},#{name},#{tel},#{status},#{createtime})
+        insert into wx_order(id,userid,type,number,totalmoney,totalnum,address,name,tel,status,createtime,orderPayNo)
+        values(#{id},#{userid},#{type},#{number},#{totalmoney},#{totalnum},#{address},#{name},#{tel},#{status},#{createtime},#{orderPayNo})
     </insert>
 
     <insert id="addOrderInfo">
@@ -212,6 +212,12 @@
         select *
         from wx_order
         where id=#{id}
+    </select>
+
+    <select id="getOrderByOutTradeNo" resultType="com.study.bean.specific.Order">
+        select *
+        from wx_order
+        where orderPayNo=#{id}
     </select>
 
     <select id="getOrderByPage" resultType="com.study.bean.specific.Order">

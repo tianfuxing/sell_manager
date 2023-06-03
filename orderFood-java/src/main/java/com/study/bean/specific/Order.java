@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Order {
 
-    public static final String RECEIVED="已接单";
+    public static final String RECEIVED="未付款";
     public static final String ACCOMPLISH="订单完成";
     public static final String CANCEL="订单取消";
 
@@ -22,6 +22,16 @@ public class Order {
     private String tel;
     private String status;
     private Date createtime;
+    //支付订单号
+    private String orderPayNo;
+
+    public String getOrderPayNo() {
+        return orderPayNo;
+    }
+
+    public void setOrderPayNo(String orderPayNo) {
+        this.orderPayNo = orderPayNo;
+    }
 
     public String getId() {
         return id;

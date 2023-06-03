@@ -5,6 +5,7 @@ import com.study.common.bean.CommonResult;
 import com.study.common.util.NumberID;
 import com.study.common.util.UserContextHolder;
 import com.study.service.SpecificService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RestController
@@ -270,6 +273,7 @@ public class SpecificController {
     @PostMapping("/addOrder")
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public CommonResult addOrder(@RequestBody Order order){
+        order.setOrderPayNo(getOrderNum());
         order.setId(UUID.randomUUID().toString());
         order.setUserid(UserContextHolder.getInstance().getId());
         order.setNumber(order.getType() + NumberID.getNumberId());
@@ -281,9 +285,19 @@ public class SpecificController {
         }
         service.addOrder(order);
         service.updateUserScore(Integer.parseInt(order.getTotalmoney().toString()));
-        return CommonResult.success();
+        return CommonResult.success(order);
     }
 
+    //生成订单号
+    public static synchronized  String getOrderNum() {
+        //时间（精确到毫秒）
+        DateTimeFormatter ofPattern = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+        String localDate = LocalDateTime.now().format(ofPattern);
+        //3位随机数
+        String randomNumeric = RandomStringUtils.randomNumeric(3);
+        String orderNum = "HX"+localDate + randomNumeric;
+        return orderNum;
+    }
     /**
      * 获取用户等级
      * @return

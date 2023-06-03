@@ -70,6 +70,8 @@ public interface SpecificMapper {
 
     Order getOrderById(@Param("id") String id);
 
+    Order getOrderByOutTradeNo(@Param("id") String id);
+
     List<Order> getOrderByPage(Map dataMap);
 
     int getOrderByPageCount(Map dataMap);
