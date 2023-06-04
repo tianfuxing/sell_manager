@@ -110,9 +110,9 @@ public class PayService {
         payConfig.setAppId(appid);
         payConfig.setMchId(StringUtils.trimToNull("1644030577"));
         payConfig.setMchKey(StringUtils.trimToNull("81f773463aee4f2e5e869e442e2e2ce0"));
-        payConfig.setKeyPath(StringUtils.trimToNull("G:\\WXCertUtil\\cert\\apiclient_cert.p12"));
-        payConfig.setPrivateCertPath("G:\\WXCertUtil\\cert\\apiclient_cert.pem");
-        payConfig.setPrivateKeyPath("G:\\WXCertUtil\\cert\\apiclient_key.pem");
+        payConfig.setKeyPath(StringUtils.trimToNull("C:\\WXCertUtil\\cert\\apiclient_cert.p12"));
+        payConfig.setPrivateCertPath("C:\\WXCertUtil\\cert\\apiclient_cert.pem");
+        payConfig.setPrivateKeyPath("C:\\WXCertUtil\\cert\\apiclient_key.pem");
 
         // 可以指定是否使用沙箱环境
         payConfig.setUseSandboxEnv(false);
